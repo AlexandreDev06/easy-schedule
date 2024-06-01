@@ -1,0 +1,28 @@
+services:
+
+  postgres:
+    image: postgres:15.3-alpine3.18
+    environment:
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    hostname: postgres
+    container_name: api_postgres
+
+  api:
+    build: .
+    volumes:
+      - .:/home/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    hostname: api
+    container_name: api
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres:
