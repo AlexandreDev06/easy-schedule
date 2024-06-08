@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from app.configs.base_crud import BaseCrud
-from app.controllers.auth.services.auth_services import get_password_hash
 from app.models.users import User
+from app.services.auth_services import get_password_hash
 
 router = APIRouter(tags=["Health"])
 
