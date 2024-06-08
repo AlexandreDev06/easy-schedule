@@ -1,17 +1,13 @@
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-import app.controllers.auth.services.auth_services as auth_services
-from app.schemas.auth_schemas import (
-    OutputLoginSchema,
-)
+import app.services.auth_services as auth_services
+from app.schemas.auth_schemas import OutputLoginSchema
 from app.schemas.user_schemas import UserSchema
 
 
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    """
-    Authenticate user and return JWT token
-    """
+async def login(form_data: OAuth2PasswordRequestForm = Depends()) -> OutputLoginSchema:
+    """Authenticate user and return JWT token"""
     user = await auth_services.user_exists(form_data.username)
 
     await auth_services.authenticate_user(form_data.username, form_data.password)
