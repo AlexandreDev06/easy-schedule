@@ -1,9 +1,11 @@
+import asyncio
+
 from fastapi import Depends, FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
-from app.controllers.auth.services.auth_services import get_password_hash
+
 from app import exceptions as exe
 from app.configs.base_crud import BaseCrud
 from app.exceptions.internal_server_error_exception import exceptions_middleware
@@ -11,7 +13,6 @@ from app.helpers.get_current_username_swagger import get_current_username
 from app.models.users import User
 from app.routes import routers
 from app.schemas import response_model
-import asyncio
 
 app = FastAPI(responses=response_model, redoc_url=None, docs_url=None, openapi_url=None)
 app.add_middleware(
