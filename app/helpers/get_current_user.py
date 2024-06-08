@@ -20,7 +20,6 @@ async def get_current_user(
         payload = jwt.decode(
             token, settings.secret_key, algorithms=[settings.jwt_algorithm]
         )
-        print(payload)
     except JWTError:
         raise await get_http_exception(
             "Email e/(ou) senha incorreto(s).", status.HTTP_401_UNAUTHORIZED
@@ -30,7 +29,6 @@ async def get_current_user(
 
     current_user = await BaseCrud(User).get_record(
         filters=[User.email == email],
-        join=[User.users],
         unique=True,
     )
 
