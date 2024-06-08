@@ -14,6 +14,8 @@ class BaseConfig(BaseSettings):
     access_token_expires_in_minutes: str
     secret_key: str
     jwt_algorithm: str
+    openai_api_key: str
+    secure_token: str
 
     class Config:
         """Config class"""
