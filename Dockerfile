@@ -18,6 +18,8 @@ ENV VIRTUAL_ENV=/poetry/.venv \
     PATH="/poetry/.venv/bin:$PATH" \
     TZ=America/Sao_Paulo
 
+RUN pip install poetry==1.8.2
+
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 WORKDIR /home/app

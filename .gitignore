@@ -132,3 +132,5 @@ public-endpoint.json
 build.sh
 .ruff_cache
 venv
+
+wppconnect-server/config.json

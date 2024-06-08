@@ -10,6 +10,8 @@ services:
       - "5432:5432"
     hostname: postgres
     container_name: api_postgres
+    networks:
+      - wpp-network
 
   api:
     build: .
@@ -23,6 +25,28 @@ services:
     container_name: api
     stdin_open: true
     tty: true
+    networks:
+      - wpp-network
+
+  wppconnect-server:
+    build:
+      context: ./wppconnect-server
+      dockerfile: Dockerfile
+    restart: always
+    image: wppconnect-server
+    container_name: wppconnect-server
+    hostname: wppconnect-server
+    entrypoint: docker-entrypoint.sh yarn dev
+    ports:
+      - 21465:21465
+    networks:
+      - wpp-network
+    tty: true
 
 volumes:
   postgres:
+
+
+networks:
+  wpp-network:
+    driver: bridge
