@@ -6,6 +6,7 @@ from app.configs.base import Base
 
 class Professional(Base):
     """Professional model to login and to show the schedule."""
+
     __tablename__ = "professionals"
 
     email = Column(String, nullable=False, unique=True)

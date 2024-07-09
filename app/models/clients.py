@@ -6,6 +6,7 @@ from app.configs.base import Base
 
 class Client(Base):
     """Client model to mark an appointment."""
+
     __tablename__ = "clients"
 
     name = Column(String, nullable=False)

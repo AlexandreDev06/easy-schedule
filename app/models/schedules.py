@@ -6,6 +6,7 @@ from app.configs.base import Base
 
 class Schedules(Base):
     """Schedule model that will be the time that professional will be available."""
+
     __tablename__ = "schedules"
 
     start_at = Column(DateTime, nullable=False)

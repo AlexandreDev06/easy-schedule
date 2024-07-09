@@ -14,18 +14,33 @@ class MessagesWppServices(BaseWppService):
     async def answer(self, phone: str, message: str):
         """Answer the message received"""
         await BaseCrud(Message).create_record(
-            {"role": "user", "content": message, "user_id": self.current_user.id, "phone": phone}
+            {
+                "role": "user",
+                "content": message,
+                "user_id": self.current_user.id,
+                "phone": phone,
+            }
         )
         last_messages_by_phone = await self._get_last_messages(phone)
         gpt_answer = await GPT().get_gpt_answer(last_messages_by_phone)
         await BaseCrud(Message).create_record(
-            {"role": "system", "content": gpt_answer, "user_id": self.current_user.id, "phone": phone}
+            {
+                "role": "system",
+                "content": gpt_answer,
+                "user_id": self.current_user.id,
+                "phone": phone,
+            }
         )
 
         requests.post(
             f"{self.api_url}/send-message",
             headers=self.headers,
-            json={"phone": phone, "isGroup": False, "isNewsletter": False, "message": gpt_answer},
+            json={
+                "phone": phone,
+                "isGroup": False,
+                "isNewsletter": False,
+                "message": gpt_answer,
+            },
         )
 
         return True

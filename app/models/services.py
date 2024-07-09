@@ -6,6 +6,7 @@ from app.configs.base import Base
 
 class Service(Base):
     """Service model that will be the service that professional will provide."""
+
     __tablename__ = "services"
 
     name = Column(String, nullable=False)

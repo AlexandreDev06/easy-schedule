@@ -22,7 +22,8 @@ class SessionWppService(BaseWppService):
             raise Exception("Error on generate token")
 
         await BaseCrud(User).update_record(
-            instance_id=self.current_user.id, data={"session_token": response.json()["token"]}
+            instance_id=self.current_user.id,
+            data={"session_token": response.json()["token"]},
         )
         return response.json()["token"]
 
@@ -31,11 +32,15 @@ class SessionWppService(BaseWppService):
         requests.post(
             f"{self.api_url}/start-session",
             headers=self.headers,
-            json={"webhook": f"http://api:8000/api/v1/answer/{self.current_user.session_token}"},
+            json={
+                "webhook": f"http://api:8000/api/v1/answer/{self.current_user.session_token}"
+            },
         )
 
         for _ in range(3):
-            qrcode_response = requests.get(f"{self.api_url}/qrcode-session", headers=self.headers)
+            qrcode_response = requests.get(
+                f"{self.api_url}/qrcode-session", headers=self.headers
+            )
             if type(qrcode_response.content) == bytes:
                 return qrcode_response.content
 

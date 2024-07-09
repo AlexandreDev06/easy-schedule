@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from typing import Optional
 
@@ -6,7 +5,6 @@ from app.configs.base import ApiBaseModel
 
 
 class ProfessionalSchema(ApiBaseModel):
-
     id: Optional[int] = None
     name: Optional[str] = None
     email: Optional[str] = None

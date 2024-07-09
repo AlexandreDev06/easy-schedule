@@ -28,7 +28,9 @@ async def authenticate_user(email: str, password: str) -> User:
     user = await BaseCrud(User).get_record(filters=[User.email == email], unique=True)
 
     if not user or not await verify_password(password, user.password_digest):
-        raise await get_http_exception("Email e/(ou) senha incorreto(s).", status.HTTP_401_UNAUTHORIZED)
+        raise await get_http_exception(
+            "Email e/(ou) senha incorreto(s).", status.HTTP_401_UNAUTHORIZED
+        )
 
     return user
 
@@ -45,14 +47,18 @@ async def create_access_token(
         expire = datetime.now(tz=UTC) + timedelta(minutes=expires_in_minutes)
         to_encode.update({"exp": expire})
 
-    encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=settings.jwt_algorithm)
+    encoded_jwt = jwt.encode(
+        to_encode, settings.secret_key, algorithm=settings.jwt_algorithm
+    )
     return encoded_jwt
 
 
 async def user_exists(email: str) -> User:
     user = await BaseCrud(User).get_record(filters=[User.email == email], unique=True)
     if not user:
-        raise await get_http_exception("Conta não encontrada.", status.HTTP_401_UNAUTHORIZED)
+        raise await get_http_exception(
+            "Conta não encontrada.", status.HTTP_401_UNAUTHORIZED
+        )
 
     return user
 

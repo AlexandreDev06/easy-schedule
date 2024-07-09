@@ -6,6 +6,7 @@ from app.configs.base import Base
 
 class Appointment(Base):
     """Appointment model that will be the time that client will be with the professional."""
+
     __tablename__ = "appointments"
 
     start_at = Column(DateTime, nullable=False)
