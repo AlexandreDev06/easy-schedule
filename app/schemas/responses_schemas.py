@@ -24,7 +24,6 @@ class HTTPInternalServerError(BaseModel):
 
 # response_model to swagger
 response_model = {
-    200: {"model": DefaultResponse},
     422: {"model": HTTPValidationError},
     500: {"model": HTTPInternalServerError},
 }

@@ -3,7 +3,6 @@ from sqlalchemy import asc
 
 from app.configs.base_crud import BaseCrud
 from app.external.gpt import GPT
-from app.models.messages import Message
 from app.models.users import User
 from app.services.base_wpp_services import BaseWppService
 

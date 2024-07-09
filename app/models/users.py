@@ -11,8 +11,6 @@ class User(Base):
 
     email = Column(String, nullable=False, unique=True)
     password_digest = Column(String, nullable=True)
-    session_token = Column(String, nullable=True)
-    prompt = Column(String, nullable=True)
     name = Column(String, nullable=True)
-    is_active = Column(Boolean, default=True)
-    messages = relationship("Message", back_populates="user", lazy="joined")
+
+    professionals = relationship("Professional", back_populates="user", lazy="joined")
