@@ -30,7 +30,7 @@ services:
 
   wppconnect-server:
     build:
-      context: ./wppconnect-server
+      context: ./wpp-server
       dockerfile: Dockerfile
     restart: always
     image: wppconnect-server
