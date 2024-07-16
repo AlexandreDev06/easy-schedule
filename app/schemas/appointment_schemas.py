@@ -20,5 +20,15 @@ class AppointmentSchema(ApiBaseModel):
     client_id: Optional[int] = None
     client: Optional[ClientSchema] = None
     professional_id: Optional[int] = None
+    professional: Optional[ProfessionalSchema]
     schedule_id: Optional[int] = None
+    schedule: Optional[ScheduleSchema] = None
     service_id: Optional[int] = None
+    service: Optional[ServiceSchema] = None
+
+
+class PaginatedAppointmentsSchema(ApiBaseModel):
+    data: list[Optional[AppointmentSchema]]
+    current_page: int
+    total_pages: int
+    total_records: int

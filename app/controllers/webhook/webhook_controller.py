@@ -1,4 +1,4 @@
-from app.configs.base_crud import BaseCrud
+from app.configs import BaseCrud
 from app.models.users import User
 from app.services.messages_wpp_services import MessagesWppServices
 

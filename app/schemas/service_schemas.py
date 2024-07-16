@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from app.configs.base import ApiBaseModel
+from app.schemas.professional_schemas import ProfessionalSchema
 
 
 class ServiceSchema(ApiBaseModel):
@@ -15,3 +16,4 @@ class ServiceSchema(ApiBaseModel):
     updated_at: datetime
 
     professional_id: Optional[int] = None
+    professional: Optional[ProfessionalSchema] = None

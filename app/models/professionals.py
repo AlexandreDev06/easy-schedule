@@ -15,4 +15,7 @@ class Professional(Base):
     is_active = Column(Boolean, nullable=False, default=True)
 
     user_id = Column(Integer, ForeignKey("users.id"))
-    user = relationship("User", back_populates="professional")
+    user = relationship("User", back_populates="professionals", lazy="joined")
+    appointments = relationship("Appointment", back_populates="professional")
+    schedules = relationship("Schedule", back_populates="professional")
+    services = relationship("Service", back_populates="professional")

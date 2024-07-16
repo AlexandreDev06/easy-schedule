@@ -14,4 +14,7 @@ class Client(Base):
     email = Column(String, nullable=False)
 
     user_id = Column(Integer, ForeignKey("users.id"))
-    user = relationship("User", back_populates="client")
+    user = relationship("User", back_populates="clients", lazy="joined")
+    appointments = relationship(
+        "Appointment", back_populates="client", cascade="all, delete"
+    )
