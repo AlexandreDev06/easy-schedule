@@ -1,4 +1,5 @@
 import asyncio
+from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI
 from fastapi.exceptions import RequestValidationError
@@ -7,14 +8,38 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.openapi.utils import get_openapi
 
 from app import exceptions as exe
-from app.configs.base_crud import BaseCrud
+from app.configs import BaseCrud
 from app.exceptions.internal_server_error_exception import exceptions_middleware
 from app.helpers.get_current_username_swagger import get_current_username
 from app.models.users import User
 from app.routes import routers
 from app.schemas import response_model
+from app.services.auth_services import get_password_hash
 
-app = FastAPI(responses=response_model, redoc_url=None, docs_url=None, openapi_url=None)
+
+@asynccontextmanager
+async def create_admin_user(app: FastAPI):
+    """Create admin user"""
+    if not await BaseCrud(User).get_record(
+        filters=[User.email == "admin@admin.com"], unique=True
+    ):
+        await BaseCrud(User).create_record(
+            {
+                "email": "admin@admin.com",
+                "name": "Admin User",
+                "password_digest": await get_password_hash("admin"),
+            }
+        )
+    yield
+
+
+app = FastAPI(
+    responses=response_model,
+    redoc_url=None,
+    docs_url=None,
+    openapi_url=None,
+    lifespan=create_admin_user,
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
