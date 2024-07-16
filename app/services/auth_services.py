@@ -6,8 +6,7 @@ from fastapi import status
 from jose import jwt
 from passlib.context import CryptContext
 
-from app.configs.base_crud import BaseCrud
-from app.configs.settings import settings
+from app.configs import BaseCrud, settings
 from app.exceptions.internal_server_error_exception import get_http_exception
 from app.models.users import User
 from app.schemas.user_schemas import UserSchema

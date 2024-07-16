@@ -1,4 +1,5 @@
 from openai import OpenAI
+
 from app.configs.settings import settings
 
 

@@ -2,8 +2,7 @@ import time
 
 import requests
 
-from app.configs.base_crud import BaseCrud
-from app.configs.settings import settings
+from app.configs import BaseCrud, settings
 from app.models.users import User
 from app.services.base_wpp_services import BaseWppService
 
