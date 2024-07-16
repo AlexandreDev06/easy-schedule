@@ -1,12 +1,13 @@
 import math
 
-from sqlalchemy import delete, func, select, update
+from sqlalchemy import delete, func, or_, select, update
 from sqlalchemy.orm import DeclarativeBase, joinedload
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 from sqlalchemy.orm.strategy_options import Load
 from sqlalchemy.sql.elements import BinaryExpression
 
 from app.configs.database import DBConnection
+from app.schemas.input_schemas import DefaultPagination
 
 
 class BaseCrud:
@@ -41,8 +42,8 @@ class BaseCrud:
             query = conn.session.scalars(query)
             if unique:
                 return query.unique().first()
-
-            return query
+            else:
+                return query.all()
 
     async def update_record(
         self,
@@ -112,6 +113,7 @@ class BaseCrud:
         offset: int = None,
         limit: int = None,
         order_by: list[InstrumentedAttribute] = None,
+        order_type: str = "asc",
         options: list[Load] = None,
         join: list[DeclarativeBase] = None,
         only_count: bool = False,
@@ -128,7 +130,9 @@ class BaseCrud:
             query = query.filter(*filters)
 
         if order_by:
-            query = query.order_by(*order_by)
+            query = query.order_by(
+                *[getattr(field, order_type)() for field in order_by]
+            )
 
         if offset and not only_count:
             query = query.offset(offset)
@@ -149,6 +153,32 @@ class BaseCrud:
                 return count, pages
 
             return query.scalars().all()
+
+    async def paginate_records(self, pagination: DefaultPagination):
+        """Paginate any records"""
+        offset = await self._calculate_offset(pagination.page, pagination.per_page)
+
+        filters = []
+        if pagination.search is not None:
+            search_fstring = f"%{pagination.search}%"
+            fields = [
+                getattr(self.model, field)
+                for field in pagination.fields_to_search.split(",")
+            ]
+            filters.append(or_(*[field.ilike(search_fstring) for field in fields]))
+
+        records = await self.search_records(
+            filters=filters,
+            offset=offset,
+            limit=pagination.per_page,
+            order_by=[getattr(self.model, pagination.order_by)],
+            order_type=pagination.order_type,
+        )
+        count, pages = await self.search_records(
+            filters=filters, offset=offset, limit=pagination.per_page, only_count=True
+        )
+
+        return records, count, pages
 
     async def _calculate_pages(self, query_count: int, limit: int) -> int:
         total_pages = math.ceil(query_count / limit)
