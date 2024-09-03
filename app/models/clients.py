@@ -12,6 +12,7 @@ class Client(Base):
     name = Column(String, nullable=False)
     cpf = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False)
+    cellphone = Column(String, nullable=True)
 
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="clients", lazy="joined")

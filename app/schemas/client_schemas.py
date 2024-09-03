@@ -22,3 +22,11 @@ class PaginatedClientsSchema(ApiBaseModel):
     current_page: int
     total_pages: int
     total_records: int
+
+
+class PostClientSchema(ApiBaseModel):
+    name: str
+    cpf: str
+    email: str
+    cell_phone: str
+    user_id: Optional[int] = None

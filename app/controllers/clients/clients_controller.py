@@ -4,7 +4,7 @@ from app.configs import BaseCrud
 from app.helpers.get_current_user import get_current_user
 from app.models.clients import Client
 from app.models.users import User
-from app.schemas.client_schemas import PaginatedClientsSchema
+from app.schemas.client_schemas import PaginatedClientsSchema, PostClientSchema
 from app.schemas.input_schemas import DefaultPagination
 
 
@@ -20,3 +20,10 @@ async def get_all(
         total_pages=pages,
         total_records=count,
     )
+
+async def create(
+    client: PostClientSchema,
+    current_user: str = Depends(get_current_user),
+) -> PostClientSchema:
+    """Create a new Client"""
+    return await BaseCrud(Client).create_record(client.__dict__)

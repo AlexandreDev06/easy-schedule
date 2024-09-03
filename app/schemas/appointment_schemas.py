@@ -26,6 +26,14 @@ class AppointmentSchema(ApiBaseModel):
     service_id: Optional[int] = None
     service: Optional[ServiceSchema] = None
 
+class PostAppointmentSchema(ApiBaseModel):
+    start_at: Optional[datetime] = None
+    finish_at: Optional[datetime] = None
+    notes: Optional[str] = None
+    client_id: Optional[int] = None
+    professional_id: Optional[int] = None
+    schedule_id: Optional[int] = None
+    service_id: Optional[int] = None
 
 class PaginatedAppointmentsSchema(ApiBaseModel):
     data: list[Optional[AppointmentSchema]]

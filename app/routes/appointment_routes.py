@@ -5,3 +5,4 @@ import app.controllers.appointments.appointments_controller as appointments_cont
 appointment_router = APIRouter(tags=["Appointments"], prefix="/appointments")
 
 appointment_router.get("/")(appointments_controller.get_all)
+appointment_router.post("/")(appointments_controller.create)

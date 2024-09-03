@@ -13,5 +13,5 @@ class User(Base):
     password_digest = Column(String, nullable=True)
     name = Column(String, nullable=True)
 
-    professionals = relationship("Professional", back_populates="user")
+    professionals = relationship("Professional", back_populates="user", lazy="joined")
     clients = relationship("Client", back_populates="user")

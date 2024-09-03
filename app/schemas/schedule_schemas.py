@@ -25,3 +25,8 @@ class PaginatedSchedulesSchema(ApiBaseModel):
     current_page: int
     total_pages: int
     total_records: int
+
+class PostScheduleSchema(ApiBaseModel):
+    start_at: datetime
+    finish_at: datetime
+    is_active: Optional[bool] = True
