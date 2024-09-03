@@ -134,3 +134,5 @@ build.sh
 venv
 
 wppconnect-server/config.json
+nginx.conf
+*.zip
