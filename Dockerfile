@@ -1,4 +1,4 @@
-FROM python:3.12-slim as builder
+FROM python:3.12-slim AS builder
 
 RUN pip install poetry==1.8.2
 
@@ -12,7 +12,7 @@ COPY pyproject.toml poetry.lock ./
 
 RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
 
-FROM python:3.12-slim as runtime
+FROM python:3.12-slim AS runtime
 
 ENV VIRTUAL_ENV=/poetry/.venv \
     PATH="/poetry/.venv/bin:$PATH" \
