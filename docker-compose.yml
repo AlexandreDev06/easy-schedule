@@ -43,9 +43,17 @@ services:
       - wpp-network
     tty: true
 
+  pg_admin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    ports:
+      - "8090:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "test@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "123123"
+
 volumes:
   postgres:
-
 
 networks:
   wpp-network:
