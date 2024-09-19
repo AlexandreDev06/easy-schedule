@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Optional
 
 from app.configs.base import ApiBaseModel
-from app.schemas.user_schemas import UserSchema
 
 
 class ClientSchema(ApiBaseModel):
@@ -14,7 +13,6 @@ class ClientSchema(ApiBaseModel):
     updated_at: datetime
 
     user_id: Optional[int] = None
-    user: Optional[UserSchema] = None
 
 
 class PaginatedClientsSchema(ApiBaseModel):

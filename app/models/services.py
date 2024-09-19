@@ -17,7 +17,7 @@ class Service(Base):
 
     professional_id = Column(Integer, ForeignKey("professionals.id"))
     professional = relationship(
-        "Professional", back_populates="services", lazy="joined"
+        "Professional", back_populates="services"
     )
     appointments = relationship("Appointment", back_populates="service")
     schedules = relationship("Schedule", back_populates="service")

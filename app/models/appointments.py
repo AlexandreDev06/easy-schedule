@@ -14,12 +14,12 @@ class Appointment(Base):
     notes = Column(String, nullable=True)
 
     client_id = Column(Integer, ForeignKey("clients.id"))
-    client = relationship("Client", back_populates="appointments", lazy="joined")
+    client = relationship("Client", back_populates="appointments")
     professional_id = Column(Integer, ForeignKey("professionals.id"))
     professional = relationship(
-        "Professional", back_populates="appointments", lazy="joined"
+        "Professional", back_populates="appointments"
     )
     schedule_id = Column(Integer, ForeignKey("schedules.id"))
-    schedule = relationship("Schedule", back_populates="appointments", lazy="joined")
+    schedule = relationship("Schedule", back_populates="appointments")
     service_id = Column(Integer, ForeignKey("services.id"))
-    service = relationship("Service", back_populates="appointments", lazy="joined")
+    service = relationship("Service", back_populates="appointments")
