@@ -1,13 +1,20 @@
-from typing import List, Optional
+from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
-from app.schemas.user_schemas import UserSchema
+
+class UserLoginSchema(BaseModel):
+    id: int
+    email: str
+    name: Optional[str]
+    created_at: datetime
+    updated_at: datetime
 
 
 class OutputLoginSchema(BaseModel):
     access_token: Optional[str] = None
-    user: UserSchema
+    user: UserLoginSchema
 
 
 class FirstAccessInputSchema(BaseModel):
