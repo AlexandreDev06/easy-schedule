@@ -51,6 +51,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "test@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "123123"
+    networks:
+      - wpp-network
 
 volumes:
   postgres:
